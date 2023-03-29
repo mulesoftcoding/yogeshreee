@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4760bfdd-3f2d-4467-8a38-bba66898dd6a" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="git-jen-assi1Flow" doc:id="dd89e352-0ba2-435b-87ba-94ada4f1e3fa" >
+		<http:listener doc:name="Listener" doc:id="956fe07b-51e6-49aa-a246-554cecee2b04" config-ref="HTTP_Listener_config" path="/test"/>
+		<set-payload value='#["data added"]' doc:name="Set Payload" doc:id="b68ef084-a8b3-4ac4-83ac-fa33dfbffd7f" />
+		<ee:transform doc:name="Transform Message" doc:id="cda2e92d-e65b-4bf4-b9e9-eaffacdbabb7" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="7f73ae50-0806-46f8-adb4-8f94eab0b9c5" />
+	</flow>
+</mule>
